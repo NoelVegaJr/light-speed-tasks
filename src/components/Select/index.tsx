@@ -24,7 +24,7 @@ export default function Select({ options, onChange, selected, title }: ISelectPr
         {isOpen && (
           <>
             <div className="relative">
-              <div className="absolute bg-white w-full border rounded-b">
+              <div className="absolute shadow-md bg-white w-full border rounded-b">
                 {options.map(option => {
                   if (option.id === selected.id) return
                   return <div onClick={() => onChange(option)} className="py-1 px-2 hover:bg-blue-500 hover:text-white cursor-pointer" key={option.id}>{option.label}</div>
