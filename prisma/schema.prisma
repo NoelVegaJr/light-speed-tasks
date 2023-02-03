@@ -4,23 +4,23 @@ datasource db {
 }
 
 generator client {
-  provider        = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["debian-openssl-3.0.x"]
 }
 
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -51,4 +51,54 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Profile {
+  id                String          @id @default(cuid())
+  name              String
+  role              String?
+  phone             String?
+  email             String?
+  tasks             Task[]
+  projectMembersips ProjectMember[]
+  taskComments      TaskComment[]
+}
+
+model Project {
+  id      String          @id @default(cuid())
+  title   String          @unique
+  color   String?
+  tasks   Task[]
+  members ProjectMember[]
+}
+
+model ProjectMember {
+  id        String  @id @default(cuid())
+  profileId String
+  projectId String
+  profile   Profile @relation(fields: [profileId], references: [id])
+  project   Project @relation(fields: [projectId], references: [id])
+}
+
+model Task {
+  id             String        @id @default(cuid())
+  projectId      String
+  profileId      String
+  title          String
+  estimatedHours Int
+  description    String?
+  status         String?
+  assignedTo     Profile       @relation(fields: [profileId], references: [id])
+  project        Project       @relation(fields: [projectId], references: [id])
+  comments       TaskComment[]
+}
+
+model TaskComment {
+  id        String   @id @default(cuid())
+  taskId    String
+  profileId String
+  text      String
+  createdAt DateTime @default(now())
+  task      Task     @relation(fields: [taskId], references: [id])
+  profile   Profile  @relation(fields: [profileId], references: [id])
 }
