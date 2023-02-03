@@ -1,5 +1,6 @@
 import { trpc } from '@/utils/trpc';
 import { BriefcaseIcon, InboxIcon, PhoneIcon } from '@heroicons/react/24/outline';
+import { Project } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -14,7 +15,7 @@ interface IProjectsProps {
 
 function MemberProjectsTable({ projects }: IProjectsProps) {
   const transform = () => {
-    const myProjects = [];
+    const myProjects: {id: string, title: string, members: string[], totalHours: number}[] = [];
 
     projects.forEach(project => {
       const myProject = {
@@ -45,7 +46,7 @@ function MemberProjectsTable({ projects }: IProjectsProps) {
                 <td className="flex-1 flex items-center gap-2 pl-8 p-2 border-x border-gray-200/30 cursor-pointer">
                   {project.title}
                 </td>
-                <td className="w-32 p-2 border-r border-gray-200/30">{project.members}</td>
+                <td className="w-32 p-2 border-r border-gray-200/30">{project.members.join(' , ')}</td>
                 <td className="w-32 p-2 border-r border-gray-200/30 ">{project.totalHours}</td>
               </tr>
             </Link>
