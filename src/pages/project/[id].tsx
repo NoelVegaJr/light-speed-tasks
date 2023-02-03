@@ -111,7 +111,7 @@ function MembersView({ members, tasks }: IMembersViewProps) {
         <div className="flex-1 flex flex-col gap-8 mt-6">
 
           {members.map(member => (
-            <div className="px-6">
+            <div key={member.id} className="px-6">
               <div className="flex items-center justify-between mb-4">
                 <Link href={`/profile/${member.profile.id}`} className="text-gray-200 text-xl hover:text-blue-400/80 hover:underline">{member.profile.name}</Link>
                 <p className="text-gray-200 text-xl">Total hours {data.get(member.profileId).totalHours}</p>
