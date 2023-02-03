@@ -31,12 +31,6 @@ function MyProjects() {
     <div className="w-full h-full ">
       <p className="font-semibold text-gray-100 text-xl mb-2 border-b border-gray-600/50 p-6 pb-10">My Projects</p>
       <div className="flex flex-wrap p-6">
-        <div className="flex items-center gap-6 w-1/2 p-4 cursor-pointer group hover:bg-gray-400/10 rounded-lg transition-colors duration-200">
-          <div className="border border-dashed border-gray-200/50 group-hover:border-gray-200 rounded-lg p-2 transition-colors duration-200">
-            <PlusIcon className="w-8 h-8 text-gray-200/50 group-hover:text-gray-200 transition-colors duration-200" />
-          </div>
-          <p className="text-gray-100 group-hover:text-gray-50">Create Project</p>
-        </div>
         {myProjectsQuery.data?.map(membership => {
           console.log(membership.project.color)
           return <ProjectListItem project={membership.project} />
