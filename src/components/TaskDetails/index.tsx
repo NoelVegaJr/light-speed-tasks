@@ -81,7 +81,7 @@ export default function TaskDetails({ close, taskId }: ITaskDetails) {
                 </button>
               </div>
             </div>
-            <TaskCommentSection taskId={taskId} comments={task.data.comments} profile={task.data.project} />
+            <TaskCommentSection taskId={taskId} createdAt={task.data.createdAt} comments={task.data.comments} profile={task.data.project} />
           </main>
 
           <TaskCommentInput taskId={taskId} profileId={'1'} />
