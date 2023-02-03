@@ -59,7 +59,7 @@ export default function TaskCommentSection({ taskId, createdAt, profile, comment
 
         )}
         {commentsToDisplay().map(comment => (
-          <Comment profile={profile} name={comment.profile.name} text={comment.text} date={comment.createdAt} />
+          <Comment key={comment.id} profile={profile} name={comment.profile.name} text={comment.text} date={comment.createdAt} />
         ))}
       </div>
 
