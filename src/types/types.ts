@@ -28,6 +28,5 @@ export interface ISelectOption {
 
 export interface ITableProps {
   filter: ISelectOption;
-  manager: ProjectsManager;
   onClick: () => void;
 }

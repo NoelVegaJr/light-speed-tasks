@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
-import {signIn} from 'next-auth/react';
+import {getSession, signIn} from 'next-auth/react';
 import z from 'zod';
+import { NextPageContext } from "next";
 
 const EmailSchema = z.string().email().endsWith('codeforkdev@gmail.com')
 type Email = z.infer<typeof EmailSchema>;
@@ -11,6 +12,22 @@ interface IAuthEmailState {
   error: string
 }
 
+
+export const getServerSideProps = async (ctx: NextPageContext) => {
+  const session = await getSession(ctx);
+
+  if(session?.user) {
+    return {
+      redirect: {
+        destination: '/taskmanager',
+        permanent: false
+      }
+    }
+  }
+  return {
+    props: {}
+  }
+}
 
 export default function Home() {
   const [email, setEmail] = useState<IAuthEmailState>({ value: '', valid: null, error: '' });
@@ -32,7 +49,6 @@ export default function Home() {
 
   const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(email.value)
     await signIn('email', {email: email.value, redirect: false})
   }
 

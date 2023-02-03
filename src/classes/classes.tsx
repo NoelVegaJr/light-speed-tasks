@@ -54,16 +54,16 @@ export class ProjectsManager {
 
   add(project: Project) {
     this._projects.set(project.id, project);
-    project.members?.map(pm => {
-      if (!pm) return;
-      const existingMember = this._members.get(pm.id);
+
+    project.members.map(m => {
+      const existingMember = this._members.get(m.id);
 
       if (!existingMember) {
-        this._members.set(pm.id, { id: pm.id, name: pm.name, projects: [project] })
-      } else {
+        this._members.set(m.id, { id: m.id, name: m.name, projects: [project] });
+        return;
+      } 
         const updatedMember = { ...existingMember, projects: [...existingMember.projects, project] }
         this._members.set(existingMember.id, updatedMember);
-      }
     })
   }
 
