@@ -1,4 +1,5 @@
-import { Project, ProjectsManager } from "@/classes/classes";
+import { Project } from "@/classes/classes";
+import { Profile, TaskComment } from "@prisma/client";
 
 
 export interface IMember {
@@ -29,4 +30,8 @@ export interface ISelectOption {
 export interface ITableProps {
   filter: ISelectOption;
   onClick: () => void;
+}
+
+export interface ICommentWithProfile extends TaskComment {
+  profile: Profile;
 }

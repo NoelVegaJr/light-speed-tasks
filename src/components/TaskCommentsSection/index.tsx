@@ -1,13 +1,15 @@
 import dateFormatter from "@/utils/dateFormatter";
-import { trpc } from "@/utils/trpc";
+import { Profile, TaskComment } from "@prisma/client";
+import { Serialize } from "@trpc/server/dist/shared/internal/serialize";
+import { Serializable } from "child_process";
 import Link from "next/link";
 import { useState } from "react"
 import Avatar from "../Avatar";
 
 interface ITaskCommentSectionProps {
   taskId: string;
-  profile: any;
-  comments: any[];
+  profile: Profile;
+  comments: SerializeObject<UndefinedToOptional<TaskComment & {profile: Profile}>>[];
   createdAt: string;
 }
 
@@ -59,7 +61,7 @@ export default function TaskCommentSection({ taskId, createdAt, profile, comment
 
         )}
         {commentsToDisplay().map(comment => (
-          <Comment key={comment.id} profile={profile} name={comment.profile.name} text={comment.text} date={comment.createdAt} />
+          <Comment key={comment.id} profile={comment.profile} name={comment.profile.name} text={comment.text} date={comment.createdAt} />
         ))}
       </div>
 

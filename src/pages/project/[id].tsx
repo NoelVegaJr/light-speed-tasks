@@ -3,19 +3,19 @@ import TaskDetails from '@/components/TaskDetails';
 import { trpc } from '@/utils/trpc';
 import { CheckIcon, ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { ListBulletIcon } from '@heroicons/react/24/solid';
+import { Profile, ProjectMember, Task } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 
 
-
 interface ITasksViewProps {
-  tasks: any;
+  tasks: SerializeObject<UndefinedToOptional<Task & {assignedTo: Profile}>>[];
 }
 
 function TasksView({ tasks }: ITasksViewProps) {
   const [openDrawer, setOpenDrawer] = useState(false);
-  const [selectedTask, setSelectedTask] = useState(tasks[0].id)
+  const [selectedTask, setSelectedTask] = useState<string>('')
 
   const getTotalHours = () => {
     let totalHours = 0;
@@ -82,8 +82,9 @@ function TasksView({ tasks }: ITasksViewProps) {
 }
 
 interface IMembersViewProps {
-  members: any;
-  tasks: any;
+  members: SerializeObject<UndefinedToOptional<ProjectMember & {profile: Profile}>>[]; 
+  tasks: SerializeObject<UndefinedToOptional<Task & {assignedTo: Profile}>>[];
+
 }
 
 function MembersView({ members, tasks }: IMembersViewProps) {

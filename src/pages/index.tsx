@@ -4,14 +4,9 @@ import MyTasks from "@/components/MyTasks";
 import Link from "next/link";
 
 function ProjectListItem({ project }: { project: any }) {
-  const colors = {
-    'bg-green-400': 'bg-green-400',
-    'bg-orange-400': 'bg-orange-400',
-    'bg-yellow-400': 'bg-yellow-400'
-  }
   return (
     <Link href={`/project/${project.id}`} className="flex items-center gap-6 w-1/2 p-4 cursor-pointer hover:bg-gray-400/10 transition-colors duration-200 overflow-hidden rounded-lg">
-      <div className={`p-2 rounded-lg  ${colors[project.color]} `}>
+      <div className={`p-2 rounded-lg  ${project.color} `}>
         <ListBulletIcon className="w-8 h-8" />
       </div>
       <p className="text-gray-100">{project.title}</p>
