@@ -2,11 +2,12 @@ import {  ListBulletIcon  } from "@heroicons/react/24/solid"
 import { trpc } from "@/utils/trpc";
 import MyTasks from "@/components/MyTasks";
 import Link from "next/link";
+import colors from "@/utils/colors";
 
 function ProjectListItem({ project }: { project: any }) {
   return (
     <Link href={`/project/${project.id}`} className="flex items-center gap-6 w-1/2 p-4 cursor-pointer hover:bg-gray-400/10 transition-colors duration-200 overflow-hidden rounded-lg">
-      <div className={`p-2 rounded-lg  ${project.color} `}>
+      <div className={`p-2 rounded-lg  ${colors[project.color]} `}>
         <ListBulletIcon className="w-8 h-8" />
       </div>
       <p className="text-gray-100">{project.title}</p>

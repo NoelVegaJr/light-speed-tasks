@@ -1,5 +1,6 @@
 import Layout from '@/components/Layout';
 import TaskDetails from '@/components/TaskDetails';
+import colors from '@/utils/colors';
 import { trpc } from '@/utils/trpc';
 import { CheckIcon, ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid';
 import { ListBulletIcon } from '@heroicons/react/24/solid';
@@ -30,11 +31,7 @@ function TasksView({ tasks }: ITasksViewProps) {
   return (
     <div className="flex h-full">
       <div className={`flex-1 p-6 h-full`}>
-        <div className="flex items-center justify-between mb-4">
-          <button className="flex gap-2 items-center border border-gray-200/30 p-1 px-2 rounded-md">
-            <PlusIcon className="w-4 h-4 text-gray-100/90" />
-            <p className="text-gray-100/80 text-xs">Add task</p>
-          </button>
+        <div className="flex items-center justify-end mb-4">
           <p className="text-xl text-gray-200">
             Total hours {getTotalHours()}
           </p>
@@ -172,7 +169,7 @@ export default function ProjectPage() {
           <>
             <div className="flex flex-col gap-4 pl-6 pt-3 border-b border-gray-100/20">
               <div className="flex items-center gap-4">
-                <div className={`${project.data.color} w-fit rounded-lg p-1`}>
+                <div className={`${colors[project.data.color]} w-fit rounded-lg p-1`}>
                   <ListBulletIcon className="w-10 h-10" />
                 </div>
                 <h1 className="text-2xl text-gray-100/90">{project.data.title}</h1>
