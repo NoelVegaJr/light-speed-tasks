@@ -33,7 +33,7 @@ function MyProjects() {
       <div className="flex flex-wrap p-6">
         {myProjectsQuery.data?.map(membership => {
           console.log(membership.project.color)
-          return <ProjectListItem project={membership.project} />
+          return <ProjectListItem key={membership.project.id} project={membership.project} />
         })}
       </div>
 

@@ -40,7 +40,7 @@ function MemberProjectsTable({ projects }: IProjectsProps) {
       <tbody className="text-gray-200/50 text-sm">
         {transform().map(project => {
           return (
-            <Link href={`/project/${project.id}`}>
+            <Link key={project.id} href={`/project/${project.id}`}>
               <tr className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10">
                 <td className="flex-1 flex items-center gap-2 pl-8 p-2 border-x border-gray-200/30 cursor-pointer">
                   {project.title}
@@ -91,7 +91,7 @@ function MemberTasksTable({ projects }: IProjectsProps) {
       <tbody className="text-gray-200/50 text-sm">
         {transform().map(task => {
           return (
-            <Link href={`/project/${task.projectId}`}>
+            <Link key={task.id} href={`/project/${task.projectId}`}>
               <tr className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10">
                 <td className="flex-1 flex items-center gap-2 pl-8 p-2 border-x border-gray-200/30 cursor-pointer">
                   {task.project}

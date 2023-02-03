@@ -50,7 +50,7 @@ function TasksView({ tasks }: ITasksViewProps) {
           </thead>
           <tbody className="text-gray-200/50 text-sm">
             {tasks.map(task => (
-              <tr className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10">
+              <tr key={task.id} className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10">
                 <td onClick={() => {
                   setSelectedTask(task.id)
                   setOpenDrawer(true)
@@ -127,7 +127,7 @@ function MembersView({ members, tasks }: IMembersViewProps) {
                   </thead>
                   <tbody className="text-gray-200/50 text-sm">
                     {data.get(member.profileId).tasks.map(task => (
-                      <tr className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10">
+                      <tr key={task.id} className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10">
                         <td onClick={() => {
                           setSelectedTask(task.id)
                           setOpenDrawer(true)

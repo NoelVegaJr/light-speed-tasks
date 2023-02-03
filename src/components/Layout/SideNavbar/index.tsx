@@ -25,7 +25,7 @@ export default function SideNavbar({ isOpen }: { isOpen: boolean }) {
             </button>
             <div style={{ backgroundColor: "#1e1f21" }} className={`${showProjects ? 'h-fit' : 'h-0'} overflow-hidden bg-`}>
               {projects.data?.map(project => (
-                <Link href={`/project/${project.id}`} className="pl-10 flex items-center gap-4 text-gray-100 text-sm p-2 hover:bg-blue-500/30 w-full">
+                <Link key={project.id} href={`/project/${project.id}`} className="pl-10 flex items-center gap-4 text-gray-100 text-sm p-2 hover:bg-blue-500/30 w-full">
                   <HashtagIcon className="w-4 h-4" />
                   <p>{project.title}</p>
                 </Link>

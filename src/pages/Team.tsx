@@ -23,7 +23,7 @@ export default function TeamPage() {
 
             {team.data?.map(profile => (
 
-              <tr className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10 cursor-pointer">
+              <tr key={profile.id} className="flex w-full text-left border-b border-gray-200/30 hover:bg-gray-400/10 cursor-pointer">
 
                 <td className="flex-1 border-r border-gray-200/30">
                   <Link href={`profile/${profile.id}`} className="w-full pl-6 py-2 flex items-center gap-4">
