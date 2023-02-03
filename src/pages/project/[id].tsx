@@ -1,3 +1,4 @@
+import Layout from '@/components/Layout';
 import TaskDetails from '@/components/TaskDetails';
 import { trpc } from '@/utils/trpc';
 import { CheckIcon, ChevronDownIcon, PlusIcon } from '@heroicons/react/24/solid';
@@ -154,11 +155,6 @@ function MembersView({ members, tasks }: IMembersViewProps) {
           )}
         </div>
       </div>
-
-
-
-
-
     </>
   )
 }
@@ -170,33 +166,30 @@ export default function ProjectPage() {
   const project = trpc.projects.getProject.useQuery({ id: router.query.id });
 
   return (
-    <div className="flex flex-1 flex-col h-full ">
-      {project.data && (
-        <>
-          <div className="flex flex-col gap-4 pl-6 pt-3 border-b border-gray-100/20">
-            <div className="flex items-center gap-4">
-              <div className={`${project.data.color} w-fit rounded-lg p-1`}>
-                <ListBulletIcon className="w-10 h-10" />
+      <div className="flex flex-1 flex-col h-full ">
+        {project.data && (
+          <>
+            <div className="flex flex-col gap-4 pl-6 pt-3 border-b border-gray-100/20">
+              <div className="flex items-center gap-4">
+                <div className={`${project.data.color} w-fit rounded-lg p-1`}>
+                  <ListBulletIcon className="w-10 h-10" />
+                </div>
+                <h1 className="text-2xl text-gray-100/90">{project.data.title}</h1>
               </div>
-              <h1 className="text-2xl text-gray-100/90">{project.data.title}</h1>
+
+              <div className="flex gap-6">
+                <button onClick={() => setActiveTab('Tasks')} className={` w-fit pb-3 ${activeTab === 'Tasks' ? 'shadow-[0px_-2px_0px_0px_rgba(255,255,255,0.85)_inset] text-white' : 'text-gray-200/60'}`}>Tasks</button>
+                <button onClick={() => setActiveTab('Members')} className={` w-fit pb-3 ${activeTab === 'Members' ? 'shadow-[0px_-2px_0px_0px_rgba(255,255,255,0.85)_inset] text-white' : 'text-gray-200/60'}`}>Members</button>
+              </div>
             </div>
 
-            <div className="flex gap-6">
-              <button onClick={() => setActiveTab('Tasks')} className={` w-fit pb-3 ${activeTab === 'Tasks' ? 'shadow-[0px_-2px_0px_0px_rgba(255,255,255,0.85)_inset] text-white' : 'text-gray-200/60'}`}>Tasks</button>
-              <button onClick={() => setActiveTab('Members')} className={` w-fit pb-3 ${activeTab === 'Members' ? 'shadow-[0px_-2px_0px_0px_rgba(255,255,255,0.85)_inset] text-white' : 'text-gray-200/60'}`}>Members</button>
+            <div className="flex-1  overflow-hidden">
+              {activeTab === 'Tasks' && <TasksView tasks={project.data.tasks} />}
+              {activeTab === 'Members' && <MembersView tasks={project.data.tasks} members={project.data.members} />}
             </div>
-          </div>
+          </>
+        )}
+      </div>
 
-          <div className="flex-1  overflow-hidden">
-            {activeTab === 'Tasks' && <TasksView tasks={project.data.tasks} />}
-            {activeTab === 'Members' && <MembersView tasks={project.data.tasks} members={project.data.members} />}
-          </div>
-
-
-
-
-        </>
-      )}
-    </div>
   )
 }

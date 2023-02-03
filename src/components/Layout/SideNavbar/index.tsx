@@ -13,7 +13,7 @@ export default function SideNavbar({ isOpen }: { isOpen: boolean }) {
     <div className={` ${isOpen ? 'w-60' : 'w-0'} h-full overflow-hidden transition-all duration-300 border-r border-gray-200/10`} style={{ backgroundColor: "#2e2e30" }}>
       {isOpen && (
         <div className="flex flex-col py-4">
-          <Link href={'/Home'} className="flex pl-8 gap-4 items-center py-2 hover:bg-gray-300/10 flex-nowrap">
+          <Link href={'/'} className="flex pl-8 gap-4 items-center py-2 hover:bg-gray-300/10 flex-nowrap">
             <HomeIcon className="w-6 h-6" style={{ color: "#a2a0a2" }} />
             <p className="text-gray-100">Home</p>
           </Link>

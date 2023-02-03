@@ -1,85 +1,69 @@
-import { FormEvent, useState } from "react";
-import {getSession, signIn} from 'next-auth/react';
-import z from 'zod';
-import { NextPageContext } from "next";
+import {  ListBulletIcon  } from "@heroicons/react/24/solid"
+import { trpc } from "@/utils/trpc";
+import MyTasks from "@/components/MyTasks";
+import Link from "next/link";
 
-const EmailSchema = z.string().email().endsWith('codeforkdev@gmail.com')
-type Email = z.infer<typeof EmailSchema>;
-
-interface IAuthEmailState {
-  value: Email
-  valid: boolean | null
-  error: string
-}
-
-
-export const getServerSideProps = async (ctx: NextPageContext) => {
-  const session = await getSession(ctx);
-
-  if(session?.user) {
-    return {
-      redirect: {
-        destination: '/taskmanager',
-        permanent: false
-      }
-    }
+function ProjectListItem({ project }: { project: any }) {
+  const colors = {
+    'bg-green-400': 'bg-green-400',
+    'bg-orange-400': 'bg-orange-400',
+    'bg-yellow-400': 'bg-yellow-400'
   }
-  return {
-    props: {}
-  }
-}
-
-export default function Home() {
-  const [email, setEmail] = useState<IAuthEmailState>({ value: '', valid: null, error: '' });
-
-  const handleEmailChange = (e: FormEvent<HTMLInputElement>) => {
-    const value = e.currentTarget.value
-    const emailProvided = z.string().email().endsWith('.com').safeParse(value).success;
-
-    if (emailProvided) {
-      if (EmailSchema.safeParse(value).success) {
-        setEmail({ value, valid: true, error: '' });
-      } else {
-        setEmail({ value, valid: false, error: 'invalid domain' })
-      }
-    } else {
-      setEmail({ ...email, valid: null, value })
-    }
-  }
-
-  const handleLogin = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await signIn('email', {email: email.value, redirect: false})
-  }
-
-  const emailInputBorder = () => {
-    if(email.valid === null) {
-      return 'focus:border-blue-500'
-    }
-
-    if(email.valid) {
-      return 'border-green-600 focus:border-green-600'
-    } else {
-      return 'border-red-600 focus:border-red-600'
-    }
-  }
-
   return (
-    <>
-      <div className="h-screen flex flex-col justify-center items-center border">
-        <h1 className="text-xl font-semibold mb-6">Light Speed Interview Project</h1>
-        <div className="max-w-xl w-full mx-auto ">
-          <form onSubmit={handleLogin}>
-            <div className="mb-2">
-              <label htmlFor="email" className="block mb-1">Email Address</label>
-              <input value={email.value} onChange={handleEmailChange} type="email" placeholder="test@lightspeedvoice.com" className={`border-2 p-1 px-4 w-full rounded-lg outline-none ${emailInputBorder()} transition-all duration-200`} />
-            </div>
-            <button type="submit" disabled={!email.valid ?? false} className="bg-blue-500 font-semibold py-1 px-2 text-white w-full rounded-lg hover:shadow-md transition-shadow duration-100 active:shadow-none">Login</button>
-          </form>
-        </div>
+    <Link href={`/project/${project.id}`} className="flex items-center gap-6 w-1/2 p-4 cursor-pointer hover:bg-gray-400/10 transition-colors duration-200 overflow-hidden rounded-lg">
+      <div className={`p-2 rounded-lg  ${colors[project.color]} `}>
+        <ListBulletIcon className="w-8 h-8" />
       </div>
-    </>
+      <p className="text-gray-100">{project.title}</p>
+    </Link>
   )
 }
 
+function MyProjects() {
+  const myProjectsQuery = trpc.user.projectMemberships.useQuery({ id: '1' });
 
+  return (
+    <div className="w-full h-full ">
+      <p className="font-semibold text-gray-100 text-xl mb-2 border-b border-gray-600/50 p-6 pb-10">My Projects</p>
+      <div className="flex flex-wrap p-6">
+        {myProjectsQuery.data?.map(membership => {
+          console.log(membership.project.color)
+          return <ProjectListItem key={membership.project.id} project={membership.project} />
+        })}
+      </div>
+
+    </div>
+  )
+}
+
+function HomeTile({ children, className }: { children: JSX.Element, className?: string }) {
+  return (
+
+    <div className={`h-96 w-1/2 rounded-lg border border-gray-600/50 hover:border-gray-500 transition-all duration-200 shadow-xl ${className}`} style={{ backgroundColor: '#2a2b2d' }}>
+      {children}
+    </div>
+  )
+}
+
+export default function HomePage() {
+
+  return (
+      <div className="h-full w-full p-6 flex flex-col">
+        <p className="font-semibold text-xl text-white">Home</p>
+        <div className="mb-10">
+          <p className="text-gray-300 font-semibold text-center">{new Date().toLocaleDateString("en-US", { weekday: 'long', month: 'long', day: '2-digit' })}</p>
+          <p className="text-gray-300 font-semibold text-3xl text-center">Good morning, Stuart</p>
+        </div>
+
+        <div className="max-w-7xl w-full flex mx-auto gap-6">
+          <HomeTile>
+            <MyTasks />
+          </HomeTile>
+          <HomeTile>
+            <MyProjects />
+          </HomeTile>
+        </div>
+      </div>
+
+  )
+}

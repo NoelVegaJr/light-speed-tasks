@@ -114,59 +114,59 @@ function MemberTasksTable({ projects }: IProjectsProps) {
 export default function ProfilePage() {
   const router = useRouter();
   const profile = trpc.user.getProfile.useQuery({ id: router.query.id })
-  console.log(profile.data?.projectMembersips.map(project => project))
   return (
-    <>
-      {profile.data && (
-        <div className="p-6 max-w-5xl flex flex-col gap-10 w-full mx-auto overflow-y-auto">
-          <div className="relative bg-white  border rounded-lg h-96 overflow-hidden">
-            <Banner />
-            <div className="w-fit h-fit translate-x-1/4 top-1/3 -translate-y-1/2 absolute border-4 border-white rounded-full ">
-              <div className="h-32 w-32  text-2xl bg-gray-200 rounded-full grid place-content-center">
-                {profile.data.name[0]}
+      <>
+        {profile.data && (
+          <div className="p-6 max-w-5xl flex flex-col gap-10 w-full mx-auto overflow-y-auto">
+            <div className="relative bg-white  border rounded-lg h-96 overflow-hidden">
+              <Banner />
+              <div className="w-fit h-fit translate-x-1/4 top-1/3 -translate-y-1/2 absolute border-4 border-white rounded-full ">
+                <div className="h-32 w-32  text-2xl bg-gray-200 rounded-full grid place-content-center">
+                  {profile.data.name[0]}
+                </div>
               </div>
-            </div>
 
-            <div className="mt-20 px-12">
-              <div className="">
-                <p className="text-2xl font-semibold mb-6">
-                  {profile.data.name}
-                </p>
-                <div className="flex flex-col gap-1">
-                  <div className="flex items-center gap-4">
-                    <BriefcaseIcon className="h-5 w-5" />
-                    <p>{profile.data.role}</p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <InboxIcon className="h-5 w-5" />
-                    <p>{profile.data.email}</p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <PhoneIcon className="h-5 w-5" />
-                    <p>{profile.data.phone}</p>
+              <div className="mt-20 px-12">
+                <div className="">
+                  <p className="text-2xl font-semibold mb-6">
+                    {profile.data.name}
+                  </p>
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center gap-4">
+                      <BriefcaseIcon className="h-5 w-5" />
+                      <p>{profile.data.role}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <InboxIcon className="h-5 w-5" />
+                      <p>{profile.data.email}</p>
+                    </div>
+                    <div className="flex items-center gap-4">
+                      <PhoneIcon className="h-5 w-5" />
+                      <p>{profile.data.phone}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="border border-gray-600/50 hover:border-gray-500 transition-all duration-200 shadow-xl rounded-lg">
-            <h2 className="text-gray-200/80 text-2xl p-6 pb-0">Projects</h2>
-            <div className="p-6">
-              <MemberProjectsTable projects={profile.data.projectMembersips.map(project => project)} />
-            </div>
-          </div>
-
-          <div className="border border-gray-600/50 hover:border-gray-500 transition-all duration-200 shadow-xl rounded-lg">
-            <h2 className="text-gray-200/80 text-2xl p-6 pb-0">Tasks</h2>
-            <div className="p-6">
-              <MemberTasksTable projects={profile.data.projectMembersips.map(project => project)} />
+            <div className="border border-gray-600/50 hover:border-gray-500 transition-all duration-200 shadow-xl rounded-lg">
+              <h2 className="text-gray-200/80 text-2xl p-6 pb-0">Projects</h2>
+              <div className="p-6">
+                <MemberProjectsTable projects={profile.data.projectMembersips.map(project => project)} />
+              </div>
             </div>
 
+            <div className="border border-gray-600/50 hover:border-gray-500 transition-all duration-200 shadow-xl rounded-lg">
+              <h2 className="text-gray-200/80 text-2xl p-6 pb-0">Tasks</h2>
+              <div className="p-6">
+                <MemberTasksTable projects={profile.data.projectMembersips.map(project => project)} />
+              </div>
+
+            </div>
           </div>
-        </div>
-      )}
-    </>
+        )}
+
+      </>
 
   )
 }
